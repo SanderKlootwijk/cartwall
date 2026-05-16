@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the cartwall.sanderklootwijk package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: cartwall.sanderklootwijk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-07 21:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../qml/pages/EditPage.qml:43
+msgid "Edit"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:43
+msgid "New"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:48 ../qml/pages/FilePage.qml:41
+msgid "Back"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:90
+msgid "Delete"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:124
+msgid "Audio"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:198
+msgid "Name and color"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:282
+msgid "Playback"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:306
+msgid "Loop"
+msgstr ""
+
+#: ../qml/pages/FilePage.qml:35 ../qml/pages/MainPage.qml:38
+msgid "Files"
+msgstr ""
+
+#: ../qml/pages/FilePage.qml:50
+msgid "Close"
+msgstr ""
+
+#: ../qml/pages/FilePage.qml:63
+msgid "Import"
+msgstr ""
+
+#: ../qml/pages/MainPage.qml:28 cartwall.desktop.in.h:1
+msgid "Cartwall"
+msgstr ""
+
+#: ../qml/pages/MainPage.qml:33
+msgid "Settings"
+msgstr ""

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Main.qml</file>
+        <file>components/CartwallButton.qml</file>
+	<file>components/ColorButton.qml</file>
+	<file>components/LomiriFilePicker.qml</file>
+	<file>pages/EditPage.qml</file>
+	<file>pages/FilePage.qml</file>
+	<file>pages/MainPage.qml</file>
+    </qresource>
+</RCC>
