@@ -73,7 +73,7 @@ Page {
         trailingActionBar {
             actions: [
                 Action {
-                    text: "Save"
+                    text: i18n.tr("Save")
                     iconName: "tick"
                     onTriggered: {
                         if (tempIndex === -1) {
@@ -174,7 +174,7 @@ Page {
                         verticalCenter: parent.verticalCenter
                     }
 
-                    text: tempFile === "" ? "Choose audio file…" : tempFile.replace("file:///home/phablet/.local/share/cartwall.sanderklootwijk/Files/", "")
+                    text: tempFile === "" ? i18n.tr("Choose audio file…") : tempFile.replace("file:///home/phablet/.local/share/cartwall.sanderklootwijk/Files/", "")
 
                     color: fileExists ? theme.palette.normal.baseText : theme.palette.normal.negative
 
@@ -403,12 +403,12 @@ Page {
          Dialog {
              id: deleteDialog
 
-             title: "Delete"
+             title: i18n.tr("Delete")
 
-             text: "Are you sure that you want to delete this button?"
+             text: i18n.tr("Are you sure that you want to delete this button?")
 
              Button {
-                text: "Delete"
+                text: i18n.tr("Delete")
                 color: theme.palette.normal.negative
 
                 onClicked: {
@@ -419,7 +419,7 @@ Page {
             }
 
              Button {
-                 text: "Cancel"
+                 text: i18n.tr("Cancel")
                  onClicked: PopupUtils.close(deleteDialog)
              }
          }
@@ -431,12 +431,12 @@ Page {
         Dialog {
             id: discardDialog
 
-            title: "Discard changes"
+            title: i18n.tr("Discard changes")
 
-            text: "Are you sure you want to discard your changes?"
+            text: i18n.tr("Are you sure you want to discard your changes?")
 
             Button {
-                text: "Discard"
+                text: i18n.tr("Discard")
                 color: theme.palette.normal.negative
 
                 onClicked: {
@@ -446,7 +446,7 @@ Page {
             }
 
             Button {
-                text: "Cancel"
+                text: i18n.tr("Cancel")
                 onClicked: PopupUtils.close(discardDialog)
             }
         }
