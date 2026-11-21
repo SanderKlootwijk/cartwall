@@ -132,7 +132,7 @@ Page {
         Dialog {
             id: newCartwallDialog
 
-            title: "New cartwall"
+            title: i18n.tr("New cartwall")
 
             TextField {
                 id: nameField
@@ -168,7 +168,7 @@ Page {
         Dialog {
             id: editCartwallDialog
 
-            title: "Edit cartwall"
+            title: i18n.tr("Edit cartwall")
 
             TextField {
                 id: nameField
