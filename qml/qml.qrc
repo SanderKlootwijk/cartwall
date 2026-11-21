@@ -1,11 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file>Main.qml</file>
-        <file>components/CartwallButton.qml</file>
-	<file>components/ColorButton.qml</file>
-	<file>components/LomiriFilePicker.qml</file>
-	<file>pages/EditPage.qml</file>
-	<file>pages/FilePage.qml</file>
-	<file>pages/MainPage.qml</file>
+		<file>Main.qml</file>
+		<file>components/CartwallButton.qml</file>
+		<file>components/CartwallPlayer.qml</file>
+		<file>components/ColorButton.qml</file>
+		<file>components/LomiriFilePicker.qml</file>
+		<file>icons/logo.svg</file>
+		<file>pages/AboutPage.qml</file>
+		<file>pages/CartwallsPage.qml</file>
+		<file>pages/EditPage.qml</file>
+		<file>pages/FilePage.qml</file>
+		<file>pages/MainPage.qml</file>
+		<file>pages/SettingsPage.qml</file>
     </qresource>
 </RCC>

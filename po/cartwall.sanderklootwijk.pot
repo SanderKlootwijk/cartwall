@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cartwall.sanderklootwijk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 21:07+0000\n"
+"POT-Creation-Date: 2026-11-21 08:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,126 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/pages/EditPage.qml:43
+#: ../qml/Main.qml:90
+msgid "Empty cartwall"
+msgstr ""
+
+#: ../qml/pages/AboutPage.qml:27 ../qml/pages/SettingsPage.qml:125
+msgid "About"
+msgstr ""
+
+#: ../qml/pages/AboutPage.qml:82
+msgid "Cartwall - Test"
+msgstr ""
+
+#: ../qml/pages/AboutPage.qml:87
+msgid "Version"
+msgstr ""
+
+#: ../qml/pages/AboutPage.qml:105
+msgid "Source code"
+msgstr ""
+
+#: ../qml/pages/AboutPage.qml:106
+msgid "Report issues"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:31
+msgid "Cartwalls"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:38
+msgid "New cartwall"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:141 ../qml/pages/CartwallsPage.qml:177
+msgid "Name"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:147
+msgid "Create"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:159 ../qml/pages/CartwallsPage.qml:196
+msgid "Cancel"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:184
+msgid "Save"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:55 ../qml/pages/MainPage.qml:55
 msgid "Edit"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:43
+#: ../qml/pages/EditPage.qml:55
 msgid "New"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:48 ../qml/pages/FilePage.qml:41
+#: ../qml/pages/EditPage.qml:60 ../qml/pages/FilePage.qml:43
 msgid "Back"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:90
+#: ../qml/pages/EditPage.qml:102
 msgid "Delete"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:124
+#: ../qml/pages/EditPage.qml:152
 msgid "Audio"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:198
+#: ../qml/pages/EditPage.qml:224
 msgid "Name and color"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:282
+#: ../qml/pages/EditPage.qml:308
 msgid "Playback"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:306
+#: ../qml/pages/EditPage.qml:332
 msgid "Loop"
 msgstr ""
 
-#: ../qml/pages/FilePage.qml:35 ../qml/pages/MainPage.qml:38
+#: ../qml/pages/EditPage.qml:372
+msgid "Stop other playing buttons"
+msgstr ""
+
+#: ../qml/pages/FilePage.qml:37 ../qml/pages/MainPage.qml:47
 msgid "Files"
 msgstr ""
 
-#: ../qml/pages/FilePage.qml:50
+#: ../qml/pages/FilePage.qml:51
 msgid "Close"
 msgstr ""
 
-#: ../qml/pages/FilePage.qml:63
+#: ../qml/pages/FilePage.qml:64
 msgid "Import"
 msgstr ""
 
-#: ../qml/pages/MainPage.qml:28 cartwall.desktop.in.h:1
+#: ../qml/pages/FilePage.qml:98
+msgid "There are no audio files here yet. Tap + to import audio files."
+msgstr ""
+
+#: ../qml/pages/MainPage.qml:33 cartwall.desktop.in.h:1
 msgid "Cartwall"
 msgstr ""
 
-#: ../qml/pages/MainPage.qml:33
+#: ../qml/pages/MainPage.qml:41 ../qml/pages/SettingsPage.qml:27
 msgid "Settings"
+msgstr ""
+
+#: ../qml/pages/MainPage.qml:121
+msgid "This cartwall is empty. Enter edit mode to add new buttons."
+msgstr ""
+
+#: ../qml/pages/SettingsPage.qml:73
+msgid "Theme"
+msgstr ""
+
+#: ../qml/pages/SettingsPage.qml:97
+msgid "System"
+msgstr ""
+
+#: ../qml/pages/SettingsPage.qml:143
+msgid "About this app"
 msgstr ""

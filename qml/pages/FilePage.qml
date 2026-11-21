@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.7
+import QtQuick 2.12
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
 import QtMultimedia 5.4
@@ -30,6 +30,8 @@ Page {
     property bool selectionMode: false
     property var targetPage: null
 
+    onVisibleChanged: previewPlayer.stop()
+
     header: PageHeader {
         id: filePageHeader
         title: i18n.tr("Files")
@@ -41,7 +43,6 @@ Page {
                     text: i18n.tr("Back")
                     iconName: "back"
                     onTriggered: {
-                        previewPlayer.stop()
                         pageStack.pop()
                     }
                 },
@@ -62,7 +63,10 @@ Page {
                 Action {
                     text: i18n.tr("Import")
                     iconName: "add"
-                    onTriggered: filePicker.open()
+                    onTriggered: {
+                        previewPlayer.stop()
+                        filePicker.open()
+                    }
                 }
             ]
         }
@@ -71,7 +75,7 @@ Page {
     FolderListModel {
         id: folderListModel
 
-        folder: "file:///home/phablet/.local/share/cartwall.sanderklootwijk/"
+        folder: "file:///home/phablet/.local/share/cartwall.sanderklootwijk/Files"
     }
 
     ListView {
@@ -83,7 +87,20 @@ Page {
         }
 
         model: folderListModel
-        
+
+        Label {
+            anchors.centerIn: parent
+
+            width: parent.width - units.gu(4)
+
+            visible: folderListView.count == 0
+
+            text: i18n.tr("There are no audio files here yet. Tap + to import audio files.")
+
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+        }
+
         delegate: ListItem {
             width: parent.width
             height: units.gu(6)
@@ -92,14 +109,17 @@ Page {
                 actions: [
                     Action {
                         iconName: "delete"
-                        onTriggered: MediaManager.deleteFile(fileUrl)
+                        onTriggered: {
+                            previewPlayer.stop()
+                            MediaManager.deleteFile(fileUrl)
+                        }
                     }
                 ]
             }
-            
+
             Label {
-                width: parent.width - units.gu(4)
-                
+                width: fileName == previewPlayer.url ? parent.width - units.gu(4) : parent.width - units.gu(8.5)
+
                 anchors {
                     left: parent.left
                     leftMargin: units.gu(2)
@@ -109,7 +129,23 @@ Page {
                 text: fileName
                 elide: Text.ElideRight
             }
-            
+
+            Icon {
+                width: units.gu(2.5)
+                height: units.gu(2.5)
+
+                visible: fileUrl == previewPlayer.source && previewPlayer.playbackState == MediaPlayer.PlayingState
+
+                anchors {
+                    right: parent.right
+                    rightMargin: units.gu(1.75)
+                    verticalCenter: parent.verticalCenter
+                }
+
+                name: "media-playback-stop"
+                color: theme.palette.normal.baseText
+            }
+
             onClicked: {
                 if (selectionMode) {
                     targetPage.tempFile = fileUrl
@@ -117,8 +153,13 @@ Page {
                     pageStack.pop()
                 }
                 else {
-                    previewPlayer.source = fileUrl
-                    previewPlayer.play()
+                    if (fileUrl == previewPlayer.source && previewPlayer.playbackState == MediaPlayer.PlayingState) {
+                        previewPlayer.stop()
+                    }
+                    else {
+                        previewPlayer.source = fileUrl
+                        previewPlayer.play()
+                    }
                 }
             }
         }
@@ -128,5 +169,13 @@ Page {
 
     MediaPlayer {
         id: previewPlayer
+    }
+
+    Connections {
+        target: Qt.application
+        
+        onAboutToQuit: {
+            previewPlayer.stop()
+        }
     }
 }

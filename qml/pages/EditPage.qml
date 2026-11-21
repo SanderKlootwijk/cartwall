@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.7
+import QtQuick 2.12
 import Lomiri.Components 1.3
 import Lomiri.Components.Popups 1.3
 import QtQuick.Layouts 1.3
@@ -33,6 +33,18 @@ Page {
     property string tempFile: ""
     property string tempButtonColor: ""
     property bool tempLoop: false
+    property bool tempStopOthers: false
+
+    property bool fileExists
+
+    onVisibleChanged: {
+        if (tempFile === "" || MediaManager.fileExists(tempFile)) {
+            fileExists = true
+        }
+        else {
+            fileExists = false
+        }
+    }
 
     Component.onCompleted: {
         nameField.text = tempName
@@ -65,24 +77,24 @@ Page {
                     iconName: "tick"
                     onTriggered: {
                         if (tempIndex === -1) {
-                            cartwallModel.append({
-                                name: nameField.text,
-                                file: tempFile,
-                                buttonColor: tempButtonColor,
-                                loop: tempLoop
-                            })
-                            saveModel()
-                            pageStack.pop()
+                            addItem(
+                                nameField.text,
+                                tempFile,
+                                tempButtonColor,
+                                tempLoop,
+                                tempStopOthers
+                            )
                         } else {
-                            cartwallModel.set(tempIndex, {
-                                name: nameField.text,
-                                file: tempFile,
-                                buttonColor: tempButtonColor,
-                                loop: tempLoop
-                            })
-                            saveModel()
-                            pageStack.pop()
+                            cartwallModel.setProperty(tempIndex, "name", nameField.text)
+                            cartwallModel.setProperty(tempIndex, "file", tempFile)
+                            cartwallModel.setProperty(tempIndex, "buttonColor", tempButtonColor)
+                            cartwallModel.setProperty(tempIndex, "loop", tempLoop)
+                            cartwallModel.setProperty(tempIndex, "stopOthers", tempStopOthers)
+
+                            updateItem(tempIndex)
                         }
+
+                        pageStack.pop()
                     }
                 },
                 Action {
@@ -95,235 +107,292 @@ Page {
         }
     }
 
-    Column {
-        width: parent.width
-        
+    Scrollbar {
+        z: 1
+        id: editScrollbar
+
+        flickableItem: editFlickable
+        align: Qt.AlignTrailing
+    }
+
+    Flickable {
+        id: editFlickable
+
         anchors {
-            left: parent.left
-            top: editPageHeader.bottom
+            fill: parent
+            topMargin: editPageHeader.height
         }
 
-        ListItem {
-            id: audioTitle
+        contentWidth: editColumn.width
+        contentHeight: editColumn.height
 
-            height: units.gu(5.25)
-
-            divider.colorFrom: theme.palette.normal.background
-            divider.colorTo: theme.palette.normal.background
-
-            Label {
-                width: parent.width - units.gu(4)
-
-                anchors {
-                    bottom: parent.bottom
-                    bottomMargin: units.gu(1.25)
-                    left: parent.left
-                    leftMargin: units.gu(2)
-                }
-                
-                text: i18n.tr("Audio") + ":"
-
-                color: theme.palette.normal.backgroundSecondaryText
-                font.bold: true
-                elide: Text.ElideRight
-            }
-        }
-
-        ListItem {
-            id: fileField
+        Column {
+            id: editColumn
             
-            width: parent.width
-            height: units.gu(6)
+            width: editPage.width
 
-            Label {
-                width: parent.width - units.gu(8.5)
+            ListItem {
+                id: audioTitle
 
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(2)
-                    verticalCenter: parent.verticalCenter
+                height: units.gu(5.25)
+
+                divider.colorFrom: theme.palette.normal.background
+                divider.colorTo: theme.palette.normal.background
+
+                Label {
+                    width: parent.width - units.gu(4)
+
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: units.gu(1.25)
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                    }
+                    
+                    text: i18n.tr("Audio") + ":"
+
+                    color: theme.palette.normal.backgroundSecondaryText
+                    font.bold: true
+                    elide: Text.ElideRight
                 }
-
-                text: tempFile === ""
-                    ? "Choose audio file…"
-                    : tempFile.replace("file:///home/phablet/.local/share/cartwall.sanderklootwijk/", "")
-
-                color: tempFile === "" || MediaManager.fileExists(tempFile)
-                    ? theme.palette.normal.text
-                    : theme.palette.normal.negative
-
-                elide: Text.ElideRight
             }
 
-            Icon {
-                id: nextIcon
-
-                width: units.gu(2.5)
-                height: units.gu(2.5)
-
-                anchors {
-                    right: parent.right
-                    rightMargin: units.gu(2)
-                    verticalCenter: parent.verticalCenter
-                }
-
-                name: "next"
-            }
-
-            onClicked: {
-                filePage.selectionMode = true
-                filePage.targetPage = editPage
-                pageStack.push(filePage)
-            }
-        }
-
-        ListItem {
-            id: appearanceTitle
-
-            height: units.gu(6.25)
-
-            divider.colorFrom: theme.palette.normal.background
-            divider.colorTo: theme.palette.normal.background
-
-            Label {
-                width: parent.width - units.gu(4)
-
-                anchors {
-                    bottom: parent.bottom
-                    bottomMargin: units.gu(1.25)
-                    left: parent.left
-                    leftMargin: units.gu(2)
-                }
+            ListItem {
+                id: fileField
                 
-                text: i18n.tr("Name and color") + ":"
-
-                color: theme.palette.normal.backgroundSecondaryText
-                font.bold: true
-                elide: Text.ElideRight
-            }
-        }
-
-        ListItem {
-            id: nameListItem
-
-            width: parent.width
-            height: units.gu(6)
-
-            divider.colorFrom: theme.palette.normal.background
-            divider.colorTo: theme.palette.normal.background
-
-            TextField {
-                id: nameField
-                
-                width: parent.width - units.gu(4)
-
-                anchors.centerIn: parent
-
-                inputMethodHints: Qt.ImhNoPredictiveText
-            }
-        }
-
-        ListItem {
-            id: colorListItem
-            
-            width: parent.width
-            height: units.gu(9)
-        
-            Flickable {
                 width: parent.width
                 height: units.gu(6)
 
-                anchors {
-                    left: parent.left
-                    leftMargin: units.gu(2)
-                    bottom: parent.bottom
-                    bottomMargin: units.gu(2)
+                Label {
+                    id: fileFieldLabel
+
+                    width: parent.width - units.gu(8.5)
+
+                    anchors {
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    text: tempFile === "" ? "Choose audio file…" : tempFile.replace("file:///home/phablet/.local/share/cartwall.sanderklootwijk/Files/", "")
+
+                    color: fileExists ? theme.palette.normal.baseText : theme.palette.normal.negative
+
+                    elide: Text.ElideRight
                 }
 
-                contentWidth: colorRow.width + units.gu(4)
-                contentHeight: height
+                Icon {
+                    id: nextIcon
 
-                clip: true
+                    width: units.gu(2.5)
+                    height: units.gu(2.5)
 
-                Row {
-                    id: colorRow
+                    anchors {
+                        right: parent.right
+                        rightMargin: units.gu(2)
+                        verticalCenter: parent.verticalCenter
+                    }
 
-                    height: parent.height
-                    spacing: units.gu(1)
+                    name: "next"
+                }
 
-                    ColorButton { color: "#8F8A94" }
-                    ColorButton { color: "#553277" }
-                    ColorButton { color: "#D6AF2B" }
-                    ColorButton { color: "#2E8A5A" }
-                    ColorButton { color: "#B83F3F" }
-                    ColorButton { color: "#2F75B8" }
+                onClicked: {
+                    filePage.selectionMode = true
+                    filePage.targetPage = editPage
+                    pageStack.push(filePage)
                 }
             }
-        }
 
-        ListItem {
-            id: loopTitle
+            ListItem {
+                id: appearanceTitle
 
-            height: units.gu(6.25)
+                height: units.gu(6.25)
 
-            divider.colorFrom: theme.palette.normal.background
-            divider.colorTo: theme.palette.normal.background
+                divider.colorFrom: theme.palette.normal.background
+                divider.colorTo: theme.palette.normal.background
 
-            Label {
-                width: parent.width - units.gu(4)
+                Label {
+                    width: parent.width - units.gu(4)
 
-                anchors {
-                    bottom: parent.bottom
-                    bottomMargin: units.gu(1.25)
-                    left: parent.left
-                    leftMargin: units.gu(2)
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: units.gu(1.25)
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                    }
+                    
+                    text: i18n.tr("Name and color") + ":"
+
+                    color: theme.palette.normal.backgroundSecondaryText
+                    font.bold: true
+                    elide: Text.ElideRight
                 }
-                
-                text: i18n.tr("Playback") + ":"
-
-                color: theme.palette.normal.backgroundSecondaryText
-                font.bold: true
-                elide: Text.ElideRight
-            }
-        }
-        
-        ListItem {
-            id: loopListItem
-
-            enabled: settings.source == "empty" ? false : true
-
-            onClicked: loopSwitch.checked ? loopSwitch.checked = false : loopSwitch.checked = true
-
-            Label {
-                width: parent.width - units.gu(10)
-
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: units.gu(2)
-                }
-                
-                text: i18n.tr("Loop")
-
-                elide: Text.ElideRight
             }
 
-            Switch {
-                id: loopSwitch
+            ListItem {
+                id: nameListItem
 
-                checked: tempLoop
+                width: parent.width
+                height: units.gu(6)
 
-                Behavior on checked {
-                    enabled: false
+                divider.colorFrom: theme.palette.normal.background
+                divider.colorTo: theme.palette.normal.background
+
+                TextField {
+                    id: nameField
+                    
+                    width: parent.width - units.gu(4)
+
+                    anchors.centerIn: parent
+
+                    inputMethodHints: Qt.ImhNoPredictiveText
+                }
+            }
+
+            ListItem {
+                id: colorListItem
+                
+                width: parent.width
+                height: units.gu(9)
+            
+                Flickable {
+                    width: parent.width
+                    height: units.gu(6)
+
+                    anchors {
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                        bottom: parent.bottom
+                        bottomMargin: units.gu(2)
+                    }
+
+                    contentWidth: colorRow.width + units.gu(4)
+                    contentHeight: height
+
+                    clip: true
+
+                    Row {
+                        id: colorRow
+
+                        height: parent.height
+                        spacing: units.gu(1)
+
+                        ColorButton { color: "#aea795" }
+                        ColorButton { color: "#62237c" }
+                        ColorButton { color: "#eab305" }
+                        ColorButton { color: "#28851e" }
+                        ColorButton { color: "#d64310" }
+                        ColorButton { color: "#1463a5" }
+                    }
+                }
+            }
+
+            ListItem {
+                id: playbackTitle
+
+                height: units.gu(6.25)
+
+                divider.colorFrom: theme.palette.normal.background
+                divider.colorTo: theme.palette.normal.background
+
+                Label {
+                    width: parent.width - units.gu(4)
+
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: units.gu(1.25)
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                    }
+                    
+                    text: i18n.tr("Playback") + ":"
+
+                    color: theme.palette.normal.backgroundSecondaryText
+                    font.bold: true
+                    elide: Text.ElideRight
+                }
+            }
+            
+            ListItem {
+                id: loopListItem
+
+                enabled: settings.source == "empty" ? false : true
+
+                onClicked: loopSwitch.checked ? loopSwitch.checked = false : loopSwitch.checked = true
+
+                Label {
+                    width: parent.width - units.gu(10)
+
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                    }
+                    
+                    text: i18n.tr("Loop")
+
+                    elide: Text.ElideRight
                 }
 
-                onCheckedChanged: tempLoop = checked
-                
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    right: parent.right
-                    rightMargin: units.gu(2)
-                } 
+                Switch {
+                    id: loopSwitch
+
+                    checked: tempLoop
+
+                    Behavior on checked {
+                        enabled: false
+                    }
+
+                    onCheckedChanged: tempLoop = checked
+                    
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        right: parent.right
+                        rightMargin: units.gu(2)
+                    } 
+                }
+            }
+
+            ListItem {
+                id: stopOthersListItem
+
+                enabled: settings.source == "empty" ? false : true
+
+                onClicked: stopOthersSwitch.checked ? stopOthersSwitch.checked = false : stopOthersSwitch.checked = true
+
+                Label {
+                    width: parent.width - units.gu(10)
+
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left
+                        leftMargin: units.gu(2)
+                    }
+                    
+                    text: i18n.tr("Stop other playing buttons")
+
+                    elide: Text.ElideRight
+                }
+
+                Switch {
+                    id: stopOthersSwitch
+
+                    checked: tempStopOthers
+
+                    Behavior on checked {
+                        enabled: false
+                    }
+
+                    onCheckedChanged: {
+                        tempStopOthers = checked
+                    }
+                    
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        right: parent.right
+                        rightMargin: units.gu(2)
+                    } 
+                }
             }
         }
     }
@@ -339,16 +408,15 @@ Page {
              text: "Are you sure that you want to delete this button?"
 
              Button {
-                 text: "Delete"
-                 color: theme.palette.normal.negative
+                text: "Delete"
+                color: theme.palette.normal.negative
 
-                 onClicked: {
-                    cartwallModel.remove(tempIndex, 1)
-                    saveModel()
+                onClicked: {
+                    removeItem(tempIndex)
                     PopupUtils.close(deleteDialog)
                     pageStack.pop()
-                 }
-             }
+                }
+            }
 
              Button {
                  text: "Cancel"
@@ -389,8 +457,9 @@ Page {
             return (
                 nameField.text !== "" ||
                 tempFile !== "" ||
-                tempButtonColor !== "#553277" ||
-                tempLoop !== false
+                tempButtonColor !== "#62237c" ||
+                tempLoop !== false ||
+                tempStopOthers !== false
             )
         } else {
             var item = cartwallModel.get(tempIndex)
@@ -399,7 +468,8 @@ Page {
                 nameField.text !== item.name ||
                 tempFile !== item.file ||
                 tempButtonColor !== item.buttonColor ||
-                tempLoop !== item.loop
+                tempLoop !== item.loop ||
+                tempStopOthers !== item.stopOthers
             )
         }
     }
