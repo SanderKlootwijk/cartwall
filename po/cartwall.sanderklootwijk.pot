@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cartwall.sanderklootwijk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 14:56+0000\n"
+"POT-Creation-Date: 2026-11-25 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../qml/Main.qml:90
@@ -58,10 +58,15 @@ msgid "Create"
 msgstr ""
 
 #: ../qml/pages/CartwallsPage.qml:159 ../qml/pages/CartwallsPage.qml:196
+#: ../qml/pages/EditPage.qml:422 ../qml/pages/EditPage.qml:449
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/pages/CartwallsPage.qml:184
+#: ../qml/pages/CartwallsPage.qml:171
+msgid "Edit cartwall"
+msgstr ""
+
+#: ../qml/pages/CartwallsPage.qml:184 ../qml/pages/EditPage.qml:76
 msgid "Save"
 msgstr ""
 
@@ -77,12 +82,17 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: ../qml/pages/EditPage.qml:102
+#: ../qml/pages/EditPage.qml:102 ../qml/pages/EditPage.qml:406
+#: ../qml/pages/EditPage.qml:411
 msgid "Delete"
 msgstr ""
 
 #: ../qml/pages/EditPage.qml:152
 msgid "Audio"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:177
+msgid "Choose audio file…"
 msgstr ""
 
 #: ../qml/pages/EditPage.qml:224
@@ -99,6 +109,22 @@ msgstr ""
 
 #: ../qml/pages/EditPage.qml:372
 msgid "Stop other playing buttons"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:408
+msgid "Are you sure that you want to delete this button?"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:434
+msgid "Discard changes"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:436
+msgid "Are you sure you want to discard your changes?"
+msgstr ""
+
+#: ../qml/pages/EditPage.qml:439
+msgid "Discard"
 msgstr ""
 
 #: ../qml/pages/FilePage.qml:37 ../qml/pages/MainPage.qml:47
