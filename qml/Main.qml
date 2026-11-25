@@ -285,17 +285,6 @@ MainView {
         CartwallPlayer {
             id: player10
         }
-
-        Connections {
-            target: root
-
-            function onStopAll() {
-                for (let player of audioController.players) {
-                    player.manuallyStopped = true
-                    player.stop()
-                }
-            }
-        }
     }
 
     // Database Functions    

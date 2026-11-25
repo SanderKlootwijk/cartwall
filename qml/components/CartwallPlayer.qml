@@ -63,4 +63,11 @@ MediaPlayer {
 
         audioController.playersState()
     }
+
+    Component.onCompleted: {
+        root.stopAll.connect(function() {
+            manuallyStopped = true
+            stop()
+        })
+    }
 }
